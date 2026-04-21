@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Multiplication Table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px #00f2fe;
+        }
+
+        .table {
+            margin-top: 10px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .row {
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideFade 0.4s forwards;
+            transition: 0.3s;
+        }
+
+        .row:hover {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        @keyframes slideFade {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            input {
+                font-size: 14px;
+            }
+
+            .row {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Table Generator</h2>
+        <input type="number" id="number" placeholder="Enter a number...">
+        <div class="table" id="result"></div>
+    </div>
+
+
+    <audio id="clickSound" src="https://www.soundjay.com/button/sounds/button-09.mp3"></audio>
+
+    <script>
+        const input = document.getElementById("number");
+        const resultDiv = document.getElementById("result");
+        const clickSound = document.getElementById("clickSound");
+
+        let lastValue = "";
+
+        input.addEventListener("input", () => {
+            const num = input.value;
+            resultDiv.innerHTML = "";
+
+            if (num === "") return;
+
+            // play sound only if value changed
+            if (num !== lastValue) {
+                clickSound.currentTime = 0;
+                clickSound.play();
+                lastValue = num;
+            }
+
+            for (let i = 1; i <= 10; i++) {
+                const row = document.createElement("div");
+                row.classList.add("row");
+                row.style.animationDelay = (i * 0.07) + "s";
+                row.textContent = `${num} × ${i} = ${num * i}`;
+                resultDiv.appendChild(row);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
